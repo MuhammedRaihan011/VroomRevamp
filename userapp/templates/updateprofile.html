@@ -1,0 +1,113 @@
+<!-- update_profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 20px;
+            color: #555;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h2>Update Your Profile</h2>
+    {% for j in user_details %}
+    <form method="post" action="{% url 'updateprof' %}">
+        {% csrf_token %}
+        
+        <!-- Full Name -->
+        <label for="id_name">Full Name:</label>
+        <input type="text" name="name" id="id_name" value="{{j.full_name}}" required>
+        <br>
+
+        <!-- Email -->
+        <label for="id_email">Email:</label>
+        <input type="email" name="email" id="id_email" value="{{j.email}}" required>
+        <br>
+
+        <!-- Phone Number -->
+        <label for="id_phonenumber">Phone Number:</label>
+        <input type="tel" name="phonenumber" id="id_phonenumber" value="{{j.phonenumber}}" required>
+        <br>
+
+
+        <!-- Username -->
+        <label for="id_username">Username:</label>
+        <input type="text" name="username" id="id_username" value="{{j.username}}" required>
+        <br>
+
+        <button type="submit">Update Profile</button>
+    </form>
+    {% endfor %}
+    <p>Go back to <a href="{% url 'index.html' %}">Profile</a></p>
+</body>
+</html>

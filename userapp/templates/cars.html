@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Sales</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-size: cover;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Overlay for fade effect */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+        }
+
+        .car-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .car-card {
+            width: 250px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            background: #fff;
+            position: relative;
+            z-index: 1; /* Lift cards above the overlay */
+        }
+
+        .car-card:hover {
+            transform: scale(1.05);
+        }
+
+        .car-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .car-name {
+            font-size: 18px;
+            margin: 10px 0 5px;
+            color: #333;
+        }
+
+        .car-model, .car-desc, .car-price, .car-category {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px; /* Add some margin to separate from the car details */
+        }
+
+        .action-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style> 
+
+
+
+</head>
+<body>
+    <h1>Car Sales</h1>
+    
+        
+            {% for i in car_det %}
+            <div class="car-card">
+                <a href="{% url 'car_detail' i.id %}">
+                    <img class="car-image" src="{{ i.veh_image.url }}" alt="{{ i.name }}">
+                </a>
+                <h2 class="car-name">{{ i.name }}</h2>
+                <p class="car-model">{{ i.model }}</p>
+                
+                <p class="car-price">{{ i.price }}</p>
+                <p class="car-category">{{ i.category }}</p> 
+            </div>
+        {% endfor %}
+
+    </div>
+    
+
+            <div class="car-container">
+        <div class="button-container">
+            <a href="javascript:history.back()" class="action-button">Go Back</a>
+        </div>
+            
+           
+
+            
+     
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

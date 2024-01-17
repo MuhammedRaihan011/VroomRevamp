@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-size: cover;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #666;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+        }
+
+        .bike-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .bike-card {
+            width: 250px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            background: #fff;
+            position: relative;
+            z-index: 1; /* Lift cards above the overlay */
+        }
+
+        .bike-card:hover {
+            transform: scale(1.05);
+        }
+
+        .car-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .bike-name {
+            font-size: 18px;
+            margin: 10px 0 5px;
+            color: #333;
+        }
+
+        .bike-model, .bike-price {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        /* Add more styles as needed for bike-specific information */
+
+        /* Button to go back to the main page */
+        .go-back-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bike List</h1>
+    <div class="bike-container">
+        {% for i in bikes %}
+            <div class="bike-card">
+                <a href="{% url 'car_detail' i.id %}">
+                    <img class="car-image" src="{{ i.veh_image.url }}" alt="{{ i.name }}">
+                </a>
+                <h2 class="bike-name">{{ i.name }}</h2>
+                <p class="bike-model">{{ i.model }}</p>
+                <p class="bike-price">{{ i.price }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    <a href="{% url 'index.html' %}" class="go-back-button">Go Back to Car List</a>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

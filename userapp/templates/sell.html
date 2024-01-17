@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Sales</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif; /* Use Montserrat or your preferred font */
+            margin: 20px;
+            background: #f4f4f4 url('{% static "assets/images/featured-cars/logn.jpg" %}') fixed center; /* Replace with your image path */
+            background-size: cover;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff7f7;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        input[type="file"] {
+            border: none;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Car Sales</h1>
+
+    <!-- Sell Your Product Form -->
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!-- Input fields for vehicle details -->
+        <label for="name">Product Name:</label>
+        <input type="text" name="name" placeholder="Car Name" required>
+
+        <label for="brand">Product Brand:</label>
+        <select name="brandname" required>
+             {% for i in brnd %}
+                   <option value="{{ i.id }}">{{ i.brandname }}</option>
+             {% endfor %}
+        </select>
+            
+
+
+        <label for="model">Product Model:</label>
+        <input type="text" name="model" placeholder="Car Model" required>
+
+        <label for="description">Product Description:</label>
+        <textarea name="description" rows="4" placeholder="Car Description" required></textarea>
+
+        <label for="price">Estimated Price:</label>
+        <input type="number" name="price" placeholder="Car Price" required>
+
+        <label for="kms">Kilometers Driven:</label>
+        <input type="number" name="kms" placeholder="Kilometers" required>
+
+
+        
+
+
+     
+        <!-- Input field for multiple images -->
+        <label for="vimage">Product Images:</label>
+        <input type="file" name="vimage" accept="image/*" multiple required>
+
+        <label for="images">Additional Images:</label>
+        <input type="file" name="images" accept="image/*" multiple required>
+
+        <label for="category">Product Type (Car/Bike):</label>
+        <select name="catname" required>
+            {% for i in product %}
+                <option value="{{i.id}}">{{i.catname}}</option>
+            {% endfor %}
+        </select>
+
+        <!-- Submit button -->
+        <button type="submit">Sell Car</button>
+    </form>
+</body>
+</html>
