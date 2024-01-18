@@ -21,46 +21,50 @@ def index(request):
  
 
 def sell(request):
-    product = category.objects.all()  # Assuming you have a Category model
-    brnd = Brands.objects.all()
-    context = {
-        'product': product,
-        'brnd':brnd
-    }
+    var = request.session.get('u_id')
+    if var in request.session:
+        product = category.objects.all()  # Assuming you have a Category model
+        brnd = Brands.objects.all()
+        context = {
+            'product': product,
+            'brnd':brnd
+        }
 
-    if request.method == 'POST':
-        name = request.POST['name']
-        model = request.POST['model']
-        brand_id = request.POST['brandname']
-        description = request.POST['description']
-        price = request.POST['price']
-        kms = request.POST['kms']
-        category_id = request.POST['catname']
-        images = request.FILES.getlist('images')
-        veh_image = request.FILES['vimage']
-        catid = category.objects.get(id=category_id)
-        br_id = Brands.objects.get(id=brand_id)
+        if request.method == 'POST':
+            name = request.POST['name']
+            model = request.POST['model']
+            brand_id = request.POST['brandname']
+            description = request.POST['description']
+            price = request.POST['price']
+            kms = request.POST['kms']
+            category_id = request.POST['catname']
+            images = request.FILES.getlist('images')
+            veh_image = request.FILES['vimage']
+            catid = category.objects.get(id=category_id)
+            br_id = Brands.objects.get(id=brand_id)
 
 
-        vehicle = Vehicle.objects.create(
-            name=name,
-            brand=br_id,
-            model=model,
-            description=description,
-            price=price,
-            kms=kms,
-            category=catid,
-            veh_image=veh_image,
-        )
+            vehicle = Vehicle.objects.create(
+                name=name,
+                brand=br_id,
+                model=model,
+                description=description,
+                price=price,
+                kms=kms,
+                category=catid,
+                veh_image=veh_image,
+            )
 
-        for image in images:
-            VehicleImage.objects.create(
-                vehicle=vehicle, 
-                image=image)
+            for image in images:
+                VehicleImage.objects.create(
+                    vehicle=vehicle, 
+                    image=image)
 
-        return redirect('index.html')  # Replace 'success_page' with the URL name of your success page
+            return redirect('index.html')  # Replace 'success_page' with the URL name of your success page
 
-    return render(request, "sell.html", context)
+        return render(request, "sell.html", context)
+    else:
+        return redirect('login')
 
 
 
@@ -88,19 +92,26 @@ def search_items(request):
 
 
 def bike_list(request):
-    bikes = Vehicle.objects.filter(category='2')  # Assuming you have a 'category' field in your Car model
-    return render(request, 'bikes.html', {'bikes': bikes})
-
+    var = request.session.get('u_id')
+    if var in request.session:
+        bikes = Vehicle.objects.filter(category='2')  # Assuming you have a 'category' field in your Car model
+        return render(request, 'bikes.html', {'bikes': bikes})
+    else :
+        return redirect('login')
 
 
 
 
 def cars(request):
-    car_det = Vehicle.objects.filter(category='1')
-    context = {
-        'car_det':car_det,
-    }
-    return render(request,"cars.html",context)
+    var = request.session.get('u_id')
+    if var in request.session:
+        car_det = Vehicle.objects.filter(category='1')
+        context = {
+            'car_det':car_det,
+        }
+        return render(request,"cars.html",context)
+    else:
+        return redirect('login')
 
 
 def car_detail(request,car_id):
@@ -254,4 +265,5 @@ def getMessages(request, room):
     return JsonResponse({"messages":list(messages.values())})
 
 
-
+def terms_of_service(request):
+    return render(request, 'terms_of_service.html')
